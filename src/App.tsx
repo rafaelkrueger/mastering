@@ -1,24 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Home } from './modules/home';
+import { Products } from './modules/products/products';
 import './App.css';
+import { Product } from './modules/product';
+import { NewProfessor } from './modules/new-professor';
+import { NewAfiliate } from './modules/new-afiliate';
+import { Dashboard } from './modules/dashboard';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { PaymentModule } from './modules/cart';
 
-function App() {
+
+const App: React.FC = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+          key="home"
+          path="/"
+          element={<Home/>}
+          />
+          <Route
+          key="products"
+          path="/recent"
+          element={<Products/>}
+          />
+          <Route
+          key="create-course"
+          path="/create-course"
+          element={<NewProfessor/>}
+          />
+          <Route
+          key="afiliate"
+          path="/afiliate"
+          element={<NewAfiliate/>}
+          />
+          <Route
+          key="products"
+          path="/product/:id"
+          element={<Product/>}
+          />
+          <Route
+          key="products"
+          path="/dashboard"
+          element={<Dashboard/>}
+          />
+          <Route
+          key="products"
+          path="/cart"
+          element={<PaymentModule/>}
+          />
+          </Routes>
+      </BrowserRouter>
     </div>
   );
 }
