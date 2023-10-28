@@ -1,9 +1,12 @@
 /* eslint-disable no-param-reassign */
 import axios, { AxiosRequestConfig } from 'axios';
 import { getStorageValue } from '../hooks/useLocalStorage';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const axiosInstance = axios.create({
-	baseURL: 'http://localhost:3005',
+	baseURL: process.env.REACT_APP_API_BASE_URL,
 	headers: {
 		'Content-type': 'application/json',
 		'Access-Control-Allow-Origin': '*',

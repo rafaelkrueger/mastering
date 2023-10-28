@@ -9,7 +9,7 @@ export const Categories: React.FC = () =>{
     const [allCategories, setAllCategories] = useState<ICategory[]>([])
 
     useEffect(()=>{
-        Api.get("http://localhost:3005/course/categories")
+        Api.get("course/categories")
         .then((res)=>{
             setAllCategories(res.data)
         })
