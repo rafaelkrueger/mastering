@@ -1,6 +1,6 @@
 import React from "react";
 import { MainBarContainer, MainImageContainer, MainImageContainerInformation, MainInformation, MainInformationTitle } from "./styles";
-import Prototype from '../../images/logo-prototype.png'
+import Prototype from '../../images/master-logo.png'
 import * as Io from 'react-icons/io'
 
 export const Information: React.FC = () => {
@@ -14,7 +14,7 @@ export const Information: React.FC = () => {
             <p><Io.IoMdRadioButtonOn style={{marginBottom:"-1%"}}/> Quarto, seu acesso é desbloqueado!</p>
         </MainBarContainer>
         <MainImageContainer>
-          <MainImageContainerInformation/>
+          <MainImageContainerInformation style={{minWidth:'100%', minHeight:'100%'}} src={Prototype}/>
         </MainImageContainer>
     </MainInformation>
   </>;

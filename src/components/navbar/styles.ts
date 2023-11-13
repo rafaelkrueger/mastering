@@ -4,7 +4,7 @@ import * as Ai from "react-icons/ai";
 
 export const Navbar = styled.nav`
   display: flex;
-  height: 10%;
+  height: 13%;
   min-width: 100%;
   max-width: 100%;
   background: black;
@@ -14,11 +14,14 @@ export const Navbar = styled.nav`
 `;
 
 export const NavbarLogo = styled.img`
-margin-top: 14px;
-  max-width: 5%;
+  margin-top: 14px;
+  height: 76px;
+  width: 160px;
   border-radius: 20px;
   &:hover {
     cursor: pointer;
+    transition: ease 1s;
+    border: 1.2px #6779f1 solid;
   }
 `;
 
@@ -37,6 +40,10 @@ export const ListElement = styled(Link)`
   margin-top: 0.6%;
   align-self: center;
   text-decoration: none;
+  &:hover {
+    color:#6779f1;
+    transition: width 5s;
+  }
   @media (max-width: 600px) {
     margin-left: 22%;
     margin-bottom: 2.5%;

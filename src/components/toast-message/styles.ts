@@ -7,13 +7,15 @@ export const ToastMessageContainer = styled.div`
 	width: 30%;
 	background-color: white;
 	height: 55px;
-	border-radius: 20px;
+	border-radius: 10px !important;
 	position: fixed;
-	top: 80px;
+	top: 110px;
 	right: 30px;
 	justify-content: space-between;
 	align-items: center;
 	box-shadow:1px 1px 20px rgba(0,0,0,0.4);
+	transition: ease-in 4s;
+	z-index: 500;
 	@media (max-width:600px){
 		width: 95%;
 		top: 110px;
@@ -32,15 +34,15 @@ export const ToastMessageHost = styled.div`
 export const ToastMessageLeft = styled.div`
 	width: 15%;
 	height: 100%;
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
 	text-align: center;
 `;
 
 export const ToastMessageMiddle = styled.div`
-	background-color: white;
 	width: 60%;
 	align-items: center;
+	margin-top: -2%;
 	@media (max-width:600px){
 		margin-top: -2%;
 	}

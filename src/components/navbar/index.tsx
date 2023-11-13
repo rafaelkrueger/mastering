@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {CgProfile} from 'react-icons/cg'
 import { Navbar, LinkList, ListElement, NavbarLogo, ContainerMenuIcon, ContainerIcons, NavbarResponsiveIcon, NavbarResponsiveContainer } from './styles';
 import * as Ai from 'react-icons/ai'
-import Logo from '../../images/logo-prototype.png'
+import Logo from '../../images/master-logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 

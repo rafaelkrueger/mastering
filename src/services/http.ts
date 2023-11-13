@@ -2,8 +2,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getStorageValue } from '../hooks/useLocalStorage';
 
+//http://localhost:3005/
+//https://mastering-backend-648a4cdef801.herokuapp.com/
+
 const axiosInstance = axios.create({
-	baseURL: "https://mastering-backend-648a4cdef801.herokuapp.com/",
+	baseURL: "http://localhost:3005/",
 	headers: {
 		'Content-type': 'application/json',
 		'Access-Control-Allow-Origin': '*',

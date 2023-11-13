@@ -58,7 +58,8 @@ export const WideCardElementDescription = styled.p`
 export const WideCardElementCart = styled.div`
 	width: 30px;
 	height: 30px;
-	background-color: white;
+	background-color: #6779f1;
+	color:white;
 	border-radius: 20px;
 	position: absolute;
 	margin-top: 0.5%;
@@ -76,12 +77,14 @@ export const WideCardElementCart = styled.div`
 
 export const WideCardElementWishlist = styled.div`
 	width: 30px;
-	background-color: white;
+	background-color: #6779f1;
+	color:white;
 	border-radius: 20px;
 	position: absolute;
 	margin-left: 17%;
 	margin-top: 0.5%;
 	z-index: 1;
+	padding-bottom: 4px;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
 	&:hover {
 		cursor: pointer;

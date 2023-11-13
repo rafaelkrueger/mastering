@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CategoriesContainer, CategoryElement, CategoryElementSkeleton, CategoryElementText } from "./styles";
+import { CategoriesContainer, CategoryElement, CategoryElementImage, CategoryElementSkeleton, CategoryElementText } from "./styles";
 import Api from "../../api";
 import { ICategory } from "../../interfaces";
 
@@ -25,6 +25,7 @@ export const Categories: React.FC = () =>{
         allCategories.map((list)=>{
             return(
                 <CategoryElement>
+                    <CategoryElementImage src={list.firstImage}/>
                     <CategoryElementText to="/recent">{list?.category}</CategoryElementText>
                 </CategoryElement>
             )

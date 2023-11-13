@@ -6,10 +6,6 @@ import React, { useEffect, useState } from "react";
 export const Cart: React.FC = () =>{
   const cart = useCart()
 
-  useEffect(()=>{
-    console.log(cart.cartItems)
-  })
-
   return (
     <>
       <CartTableContainer>
@@ -73,7 +69,7 @@ export const Cart: React.FC = () =>{
                 <CartTableTd className="purchase-table-row"></CartTableTd>
                 <CartTableTd className="purchase-table-row">Total:</CartTableTd>
                 <CartTableTd className="purchase-table-row">R${parseFloat(cart.getCartTotal()).toFixed(2)}</CartTableTd>
-                <CartTableTd className="purchase-table-row"><button style={{width:'56%'}} className="btn btn-large btn-danger">Limpar Tudo<AiOutlineClear style={{marginLeft:'5%'}} color="white" onClick={()=>cart.clearCart()}/></button></CartTableTd>
+                <CartTableTd className="purchase-table-row"><button style={{width:'56%'}} onClick={()=>cart.clearCart()} className="btn btn-large btn-danger">Limpar Tudo<AiOutlineClear style={{marginLeft:'5%'}} color="white" onClick={()=>cart.clearCart()}/></button></CartTableTd>
               </CartTableTr>
             </CartTableBody>
         </CartTable>

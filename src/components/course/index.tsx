@@ -3,18 +3,24 @@ import { CourseContainer, CourseLeftBanner, CourseLeftBannerImage, CourseLeftCon
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { ICourses } from "../../interfaces";
 import Api from "../../api";
-import { useParams } from "react-router-dom";
+import * as Ai from 'react-icons/ai'
+import { useNavigate, useParams } from "react-router-dom";
 import { ITopic } from "../../interfaces/topic";
 import { IContent } from "../../interfaces/content";
 import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
+import { ToastMessage } from "../toast-message";
 
 
 export const Course: React.FC = () =>{
     const [course, setCourse] = useState<ICourses>()
     const [topic, setTopic] = useState<ITopic[]>()
     const [content, setContent] = useState<IContent[]>()
+    const [toastOpen, setToastOpen] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
+    const [toastType, setToastType] = useState("")
     const [mainVideo, setMainVideo] = useState<string>()
+    const navigate = useNavigate()
     const cart = useCart()
 
 
@@ -35,6 +41,7 @@ export const Course: React.FC = () =>{
     return(
         <>
         <CourseContainer>
+        <ToastMessage toastOpen={toastOpen} setToastOpen={setToastOpen} type={toastType} message={toastMessage}/>
             <CourseLeftContainer>
             <CourseLeftBanner>
                 <CourseLeftBannerImage src={course?course.image:''}/>
@@ -42,7 +49,7 @@ export const Course: React.FC = () =>{
                 <br/>
                 <h1>{course?course.name:''}</h1>
                 <p>{course?course.description:''}</p>
-                </CourseLeftContainer>
+            </CourseLeftContainer>
             <CourseRightContainer>
                 <CourseRightVideo>
                 {mainVideo && (
@@ -58,12 +65,21 @@ export const Course: React.FC = () =>{
                 >
                 <source src={mainVideo} type="video/mp4" />
             </video>
-          )}               </CourseRightVideo>
+          )}
+          </CourseRightVideo>
                 <br/>
                 <CourseRightTitle>{course?course.name:''}</CourseRightTitle>
                 <CourseRightClassfier style={{display:"flex"}}>
-                    <p>5.0 (Star)</p>
+                <div style={{marginLeft:'-18%'}}>
+                    <Ai.AiFillStar size={17}/>
+                    <Ai.AiFillStar size={17}/>
+                    <Ai.AiFillStar size={17}/>
+                    <Ai.AiFillStar size={17}/>
+                    <Ai.AiOutlineStar size={17}/>
+                </div>
+                <div style={{marginLeft:'8%'}}>
                     <p> {course?course.category:''}</p>
+                </div>
                 </CourseRightClassfier>
                 <CouseRightProprieties>
                 {
@@ -82,10 +98,13 @@ export const Course: React.FC = () =>{
                     <CourseRightPrice>R$ {course?course.price:''}</CourseRightPrice>
                 </CourseRightExchange>
                 <CourseRightRightBuy>
-                    <CourseRightRightBuyButton onClick={()=>cart.addToCart(course)}><Link style={{color:'white', textDecoration:'none'}} to="/cart">Começar Agora!</Link></CourseRightRightBuyButton>
+                    <CourseRightRightBuyButton onClick={()=>{cart.addToCart(course); navigate('/cart')} }>Começar Agora!</CourseRightRightBuyButton>
                     <CourseRightRightBuyCart onClick={()=>{
                         cart.addToCart(course)
-                    }}><AiOutlineShoppingCart/></CourseRightRightBuyCart>
+                        setToastOpen(true)
+                        setToastMessage('Curso adicionado ao carrinho!')
+                        setToastType('success')
+                    }}><AiOutlineShoppingCart/> +</CourseRightRightBuyCart>
                 </CourseRightRightBuy>
             </CourseRightContainer>
         </CourseContainer>

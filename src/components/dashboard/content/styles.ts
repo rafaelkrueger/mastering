@@ -117,7 +117,7 @@ export const CourseContainerConfigIcon = styled(Ai.AiFillSetting)`
 
 export const CourseContainerContentInformationTitle = styled.h2`
 	margin-left: 4%;
-	width: 20%;
+	width: 80%;
 `;
 
 export const CourseContainerContentInformationTitleBlank = styled.h2`

@@ -110,14 +110,14 @@ export const CourseRightRightBuy = styled.div`
 `;
 
 export const CourseRightRightBuyButton = styled.div`
-	width: 70%;
+	width: 74%;
 	color: white;
 	padding: 10px;
 	text-align: center;
 	align-self: center;
 	background-color: green;
 	margin-top: 2%;
-
+	border-radius: 3px;
 	&:hover {
 		cursor: pointer;
 		opacity: 0.8;
@@ -125,8 +125,9 @@ export const CourseRightRightBuyButton = styled.div`
 `;
 
 export const CourseRightRightBuyCart = styled.div`
-	width: 10%;
+	width: 20%;
 	color: white;
+	border-radius: 3px;
 	padding: 10px;
 	text-align: center;
 	align-self: center;

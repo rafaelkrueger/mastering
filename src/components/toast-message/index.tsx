@@ -9,7 +9,7 @@ export const ToastMessage: React.FC<{ toastOpen: boolean, setToastOpen:any, type
         <>
             <ToastMessageContainer style={{display:props.toastOpen?'block':'none'}}>
                 <ToastMessageHost>
-                <ToastMessageLeft>
+                <ToastMessageLeft style={{background:props.type == 'success'?'green':'red'}}>
                     {props.type == 'success'?<ToastMessageSuccess style={{background:'green'}} size={30} color={"white"}></ToastMessageSuccess>:''}
                     {props.type == 'error'?<ToastMessageIcon style={{background:'red'}} size={30} color={"white"}></ToastMessageIcon>:''}
                 </ToastMessageLeft>

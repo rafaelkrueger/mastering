@@ -12,9 +12,8 @@ return <>
         <ProfessorCousesContainerCard>
             <ProfessorCousesContainerCardImg src={list.image}/>
             <ProfessorCousesContainerBody>
-
             <ProfessorCousesContainerCardTitle>{list.name}</ProfessorCousesContainerCardTitle>
-                        <ProfessorCousesContainerCardDescription>{list.description}</ProfessorCousesContainerCardDescription>
+                        <ProfessorCousesContainerCardDescription>{list.description.slice(0,17)}...</ProfessorCousesContainerCardDescription>
             <ProfessorCousesContainerCardButton onClick={()=>{
                 props.setSpecificCourse(list._id)
             }}>Editar Curso</ProfessorCousesContainerCardButton>
