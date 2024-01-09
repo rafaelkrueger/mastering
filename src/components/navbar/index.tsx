@@ -5,8 +5,10 @@ import * as Ai from 'react-icons/ai'
 import Logo from '../../images/master-logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocalStorage } from 'src/hooks/useLocalStorage';
 
 export const NavbarComponent: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...props}) => {
+  const [token, setToken] = useLocalStorage('accessToken', null)
   const [menuActive, setMenuActive] = useState(false)
   const [activeIcon, setActiveIcon] = useState(0)
   const [isIconActive, setIsIconActive] = useState(false)
@@ -50,7 +52,7 @@ export const NavbarComponent: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({.
           <ListElement to='/create-course'>Começe a Ensinar</ListElement>
           <ListElement to='/afiliate'>Ser um Ajudante</ListElement>
           <ContainerIcons>
-            <ListElement to="/"><CgProfile onClick={()=>props.setIsOpen(!props.isOpen)} size={28}/></ListElement>
+            <ListElement to="/"><CgProfile onClick={()=>{if(!token){props.setIsOpen(!props.isOpen)}else{navigate('/dashboard')}}} size={28}/></ListElement>
             <ListElement to="/cart"><Ai.AiOutlineShoppingCart onClick={()=>{setActiveIcon(141); setIsIconActive(true)}} size={28}/></ListElement>
             <ListElement to="/"><Ai.AiOutlineHeart onClick={()=>{setActiveIcon(241.5); setIsIconActive(true)} } size={28}/></ListElement>
           </ContainerIcons>
@@ -64,7 +66,7 @@ export const NavbarComponent: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({.
               <ListElement to='/create-course'>Começe a Ensinar</ListElement>
               <ListElement to='/afiliate'>Ser um Ajudante</ListElement>
               <ContainerIcons>
-                <ListElement to="/"><CgProfile onClick={()=>props.setIsOpen(!props.isOpen)} size={28}/></ListElement>
+                <ListElement to="/"><CgProfile onClick={()=>{if(!token){props.setIsOpen(!props.isOpen)}else{navigate('/dashboard')}}} size={28}/></ListElement>
                 <ListElement to="/cart"><Ai.AiOutlineShoppingCart onClick={()=>{setActiveIcon(312); setIsIconActive(true)}} size={28}/></ListElement>
                 <ListElement to="/"><Ai.AiOutlineHeart onClick={()=>{setActiveIcon(465); setIsIconActive(true)} } size={28}/></ListElement>
               </ContainerIcons>

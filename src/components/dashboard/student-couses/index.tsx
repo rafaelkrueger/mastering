@@ -4,6 +4,10 @@ import { ProfessorCousesContainer, ProfessorCousesContainerBody, ProfessorCouses
 
 export const StudentCourses: React.FC<{courses:any, setCourses:any, setSpecificCourse:any}> = ({...props}) => {
 return <>
+    <div style={{marginLeft:'25%', marginTop:'4%'}}>
+        <h2>Olá, boas-vindas à sua área do Aluno.</h2>
+        <p>Aqui você tem acesso aos seus cursos, livros e estatísticas.</p>
+    </div>
     <ProfessorCousesContainer>
     {props.courses.length > 0?
     props.courses.map((list:any)=>{

@@ -36,7 +36,7 @@ export const Dashboard: React.FC = () => {
         setCourses(res.data)
       })
     }
-  },[])
+  },[user, courses])
 
   useEffect(()=>{
     if(user){
@@ -63,6 +63,7 @@ export const Dashboard: React.FC = () => {
         {!specificCourse?
         <>
           <DashboardContainer>
+            {user?.isTeacher?<Format/>:''}
           {user?.isTeacher?
           <ProfessorCourses courses={courses} setCourses={setCourses} setSpecificCourse={setSpecificCourse}/>
           :
@@ -71,7 +72,6 @@ export const Dashboard: React.FC = () => {
             //grafico para o estudante
             //do lado direito lista com cursos recomendados
           }
-          {user?.isTeacher?<Format/>:''}
           </DashboardContainer>
         </>
         :

@@ -1,4 +1,4 @@
-import { IEnroll } from '../interfaces';
+import { ICourses, IEnroll } from '../interfaces';
 import http from './http';
 
 class CourseService {
@@ -9,9 +9,16 @@ class CourseService {
 			return null;
 		}
 	}
+
+	static updateCourse(data: ICourses) {
+		console.log(data)
+		return http.patch(`/admin/course`, data);
+	}
+
 	static createCourseByUser(data: any) {
 		return http.post(`/admin/course`, data);
 	}
+
 	static enrollCourseByUser(data: IEnroll) {
 		return http.post(`/course/enroll`, {userId:data.userId, courses:data.courses});
 	}

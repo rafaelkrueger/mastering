@@ -13,6 +13,7 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
     const [toastMessage, setToastMessage] = useState("")
     const [toastType, setToastType] = useState("")
     const [loading, setLoading] = useState(false)
+    const [buttonClicked, setButtonClicked] = useState(false)
     const [registerOpen, setRegisterOpen] = useState(true)
     const navigate = useNavigate()
     const [user, setUser] = useState({
@@ -23,10 +24,10 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
     })
 
     useEffect(() => {
-        if (token) {
+        if (buttonClicked && token) {
           navigate('/dashboard')
         }
-      }, [navigate, token]);
+      }, [navigate, buttonClicked, token]);
 
       const newUserMutation = useMutation((variables: any) =>
       UserService.signup(variables),
@@ -34,6 +35,7 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
         onSuccess:(res)=>{
             if(res.data){
                 setToken(res.data)
+                setButtonClicked(true)
             }
         },
         onError:(e:any)=>{
@@ -51,6 +53,7 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
         onSuccess:(res)=>{
             if(res.data){
                 setToken(res.data)
+                setButtonClicked(true)
             }
         },
         onError:(e:any)=>{
@@ -96,22 +99,22 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
             (
         <>
             <AuthModalRegularInput required onChange={(e)=>{
-                setUser({...user, email:e.target.value})
+                setUser({...user, name:e.target.value})
             }}  placeholder='Nome Completo' type="text"/>
             <AuthModalRegularInput required onChange={(e)=>{
-                setUser({...user, name:e.target.value})
+                setUser({...user, email:e.target.value})
             }} placeholder='Email' type="email"/>
             <AuthModalRegularInput required onChange={(e)=>{
                 setUser({...user, password:e.target.value})
             }} placeholder='Senha' type="password"/>
             <AuthModalRegularInput  placeholder='Confirmar senha' type="password"/>
-            <AuthModalFooterRadio >
+            <AuthModalFooterRadio style={{marginBottom:'2%'}} >
             <AuthModalFormBodyRadio><AuthModalRegularRadio onChange={()=>{
                 setUser({...user, isTeacher:false})
-            }} name="type" type="radio"/><AuthModalFormFooterTextRadio>Cadastrar como Aluno</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
+            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%'}}>Cadastrar como Aluno</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
             <AuthModalFormBodyRadio><AuthModalRegularRadio onChange={()=>{
                 setUser({...user, isTeacher:true})
-            }} name="type" type="radio"/><AuthModalFormFooterTextRadio>Cadastrar como Professor</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
+            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%'}}>Cadastrar como Professor</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
             </AuthModalFooterRadio>
             <AuthModalFormFooter>
             <AuthModalFormFooterText>Ao se inscrever, você concorda com nossos Termos de Uso e com a Política de Privacidade.</AuthModalFormFooterText>

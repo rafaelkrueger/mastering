@@ -10,6 +10,11 @@ const useCart = () => {
     }, [cartItems]);
 
   const addToCart = (item: any) => {
+    for (const itemOnCart of cartItems) {
+      if(itemOnCart._id === item._id){
+        return null;
+      }
+    }
     cartItems.filter((prevItem:any)=> prevItem._id !== item._id)
     setCartItems((prevItems: any) => [...prevItems, item]);
   };

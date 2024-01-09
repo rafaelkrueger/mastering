@@ -48,6 +48,8 @@ export const Course: React.FC = () =>{
                 </CourseLeftBanner>
                 <br/>
                 <h1>{course?course.name:''}</h1>
+                <hr/>
+                <br/>
                 <p>{course?course.description:''}</p>
             </CourseLeftContainer>
             <CourseRightContainer>
@@ -68,7 +70,6 @@ export const Course: React.FC = () =>{
           )}
           </CourseRightVideo>
                 <br/>
-                <CourseRightTitle>{course?course.name:''}</CourseRightTitle>
                 <CourseRightClassfier style={{display:"flex"}}>
                 <div style={{marginLeft:'-18%'}}>
                     <Ai.AiFillStar size={17}/>

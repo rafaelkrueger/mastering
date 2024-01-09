@@ -37,7 +37,7 @@ export const MainCarousel:React.FC =() =>{
   return (
     <>
     <CarouselSlides onClick={()=>{navigate(`/product/${coursesImages?coursesImages[currentCourse]._id:''}`)}}>
-        <CarouselImage src={coursesImages ? coursesImages[currentCourse].image : ''}/>
+        <CarouselImage src={coursesImages ? coursesImages[currentCourse]?.image : ''}/>
     </CarouselSlides>
       <CarouselImageButtonNext onClick={goToPrevious}>
         <Md.MdKeyboardArrowLeft size={30} style={{margin:'5%'}}/>

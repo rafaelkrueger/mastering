@@ -53,7 +53,7 @@ export const CourseContainerContentInformationContentDark = styled.div<StyledDiv
 	justify-content: space-between;
 	border-left: 5px white solid;
 	border-right: 5px white solid;
-	height: 30px;
+	height: 45px;
 	border-bottom: 0.2px rgba(0, 0, 0, 0.5) solid;
 	opacity: ${(props) => (props.isVisible ? 1 : 0)};
 	transform: ${(props) => (props.isVisible ? 0 : -50)};
@@ -113,6 +113,9 @@ export const CourseContainerContentRentability = styled.div`
 export const CourseContainerConfigIcon = styled(Ai.AiFillSetting)`
 	margin-bottom: -23%;
 	margin-left: 87.5%;
+	&:hover{
+		cursor: pointer;
+	}
 `
 
 export const CourseContainerContentInformationTitle = styled.h2`

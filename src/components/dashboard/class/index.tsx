@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
     import React, {useEffect, useState} from "react";
 import Api from "../../../api";
 import { ITopic } from "../../../interfaces/topic";
@@ -8,13 +9,15 @@ import * as Rx from 'react-icons/rx'
 import {SlArrowLeft} from 'react-icons/sl'
 import {AiOutlineBook} from 'react-icons/ai'
 import {BsFillPlayFill} from 'react-icons/bs'
-import { ClassComponentContainer, ClassComponentContainerLeft, ClassComponentContainerLeftWide, ClassComponentContainerLeftWideContent, ClassComponentContainerRight, ClassComponentContainerRightCard, ClassComponentContainerRightCardContainer, ClassComponentWrapper, ClassComponentWrapperTitle } from "./styles";
+import { FaBackspace } from "react-icons/fa";
+import { ClassComponentContainer, ClassComponentContainerClose, ClassComponentContainerLeft, ClassComponentContainerLeftWide, ClassComponentContainerLeftWideContent, ClassComponentContainerRight, ClassComponentContainerRightCard, ClassComponentContainerRightCardContainer, ClassComponentWrapper, ClassComponentWrapperTitle } from "./styles";
 
 
 export const ClassComponent: React.FC<{specificCourse:string, setSpecificCourse:any}> = ({...props}) => {
     const [selectedCourse, setSelectedCourse] = useState<ICourses>()
     const [selectedTopic, setSelectedTopic] = useState<ITopic[]>([])
     const [selectedContent, setSelectedContent] = useState<IContent[]>()
+    const [start, setStart] = useState(false)
     const [mainVideo, setMainVideo] = useState<string>('')
     const [course, setCourse] = useState<IContent>()
 
@@ -34,10 +37,6 @@ export const ClassComponent: React.FC<{specificCourse:string, setSpecificCourse:
             setMainVideo(selectedTopic[0]?.videoUrl as unknown as '');
         })
     },[props.specificCourse])
-
-    useEffect(()=>{
-        console.log(course)
-    },[course])
 
     return (
         <>
@@ -73,10 +72,10 @@ export const ClassComponent: React.FC<{specificCourse:string, setSpecificCourse:
                             </ClassComponentContainerLeftWide>
                             { specificContentVisible.visible && specificContentVisible.id === index?
                             selectedContent?.map((content:any)=>{
-                                if(content[0]?.topicRelated !== specificContentVisible.selectedtopic){
+                                if(content[0]?.topicRelated === specificContentVisible.selectedtopic){
                                     return(
                                         <>
-                                        <ClassComponentContainerLeftWideContent onClick={()=>{setCourse(content[0])}}>
+                                        <ClassComponentContainerLeftWideContent onClick={()=>{setStart(false); setCourse(content[0])}}>
                                             <div>
                                             <Rx.RxDotFilled size={20} style={{marginTop:'3%'}} color="green"></Rx.RxDotFilled>
                                             </div>
@@ -100,22 +99,46 @@ export const ClassComponent: React.FC<{specificCourse:string, setSpecificCourse:
                     <>
                     <ClassComponentContainerRight>
                     <ClassComponentContainerRightCardContainer>
+                    <ClassComponentContainerClose
+                    style={{display:start?'block':'none'}}
+                    onClick={()=>setStart(false)} color="white" size={30} />
                     {course.videoUrl?
-                    <ClassComponentContainerRightCard>
-                        <BsFillPlayFill style={{marginLeft:'41%'}} size={30}>Image</BsFillPlayFill>
-                        <p>Conteúdo em Vídeo</p>
+                    <>
+                    <ClassComponentContainerRightCard style={{display:!start?'block':'none'}} onClick={()=>setStart(true)}>
+                    <BsFillPlayFill size={30}>Image</BsFillPlayFill>
+                    <p>Conteúdo em Vídeo</p>
                     </ClassComponentContainerRightCard>
+                    <video
+                        controls
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            marginTop:'-2.9%',
+                            display:start?'block':'none'
+                        }}
+                    >
+                            <source src={course.videoUrl} type="video/mp4" />
+                        </video>
+                    </>
                     :''}
                     {course.files?.length as unknown as 0 > 0?
-                    <ClassComponentContainerRightCard>
-                        <AiOutlineBook style={{marginLeft:'41%'}} size={30}>Image</AiOutlineBook>
+                    <>
+                    <ClassComponentContainerRightCard style={{display:!start?'block':'none'}} onClick={()=>setStart(true)}>
+                        <AiOutlineBook size={30}>Image</AiOutlineBook>
                         <p>Conteúdo em PDF</p>
                     </ClassComponentContainerRightCard>
+                        {course?.files?.[0] ? (
+                            <iframe src={course.files[0]} style={{display:start?'block':'none', width:'100%', height:'410px'}} />
+                        ) : (
+                            <p>No PDF file available</p>
+                        )}
+                    </>
                     :''}
                     </ClassComponentContainerRightCardContainer>
                     </ClassComponentContainerRight>
                     </>
                     :
+                    mainVideo?
                     <video
                         controls
                         autoPlay
@@ -126,8 +149,13 @@ export const ClassComponent: React.FC<{specificCourse:string, setSpecificCourse:
                         >
                         <source src={mainVideo} type="video/mp4" />
                     </video>
+                    :<ClassComponentContainerRight ><div style={{textAlign:'center', marginTop:'20%', fontSize:'17pt', fontWeight:'500'}}>Selecione um tópico e conteúdo</div></ClassComponentContainerRight>
                     }
             </ClassComponentContainer>
+            <div style={{marginLeft:'6%'}}>
+            <h3>{course?.name}</h3>
+            <p>{course?.description}</p>
+            </div>
         </ClassComponentWrapper>
         </>
     )

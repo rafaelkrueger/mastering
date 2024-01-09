@@ -27,14 +27,12 @@ export const ProfessorCousesContainer = styled.div`
 `;
 
 export const ProfessorCousesContainerCard = styled.div`
-	width: 220px;
+	width: 240px;
 	height: 372px;
 	margin-inline: 30px;
 	border-radius: 20px;
 	box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.3);
 	padding: 20px;
-	padding-bottom: 50px;
-	margin-bottom: 20%;
 	&:hover {
 		background-color: white;
 		transition: 0.5s all ease;
@@ -60,7 +58,7 @@ export const ProfessorCousesContainerBody = styled.div`
 `;
 
 export const ProfessorCousesContainerCardTitle = styled.h3`
-	font-size: 18pt;
+	font-size: 13pt;
 `;
 
 export const ProfessorCousesContainerCardDescription = styled.p`

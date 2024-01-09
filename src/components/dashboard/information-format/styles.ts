@@ -99,7 +99,8 @@ export const InformationFormatContainerBodyInputContainer = styled.div`
 
 export const InformationFormatContainerBodyImage = styled.img`
 	margin-top: 6.7%;
-	width: 100%;
+	min-width: 90%;
+	max-width: 90%;
 	height: 50%;
 	border-radius: 5px;
 	border: 0.3px rgba(0, 0, 0, 0.4) solid;

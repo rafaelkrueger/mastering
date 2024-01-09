@@ -11,6 +11,17 @@ const skeletonLoading = keyframes`
   }
 `;
 
+const smoothHover = keyframes`
+    0% {
+        transform: perspective(500px) rotateY(0deg) skewX(0deg);
+    }
+    50% {
+        transform: perspective(500px) rotateY(6.5deg) skewX(3deg);
+    }
+    100% {
+        transform: perspective(500px) rotateY(8deg) skewX(0deg);
+    }`;
+
 export const WideCardGrid = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -24,12 +35,12 @@ export const WideCardGrid = styled.div`
 export const WideCardElement = styled.div`
 	width: 300px;
 	height: 150px;
-	margin: 3%;
+	margin: 2%;
 	border-radius: 15px;
-	background-color: hsl(200, 20%, 80%);
 	animation: ${skeletonLoading} 1s linear infinite alternate;
 	&:hover {
 		cursor: pointer;
+		animation: ${smoothHover} 3s linear infinite alternate;
 	}
 	@media (max-width:600px) {
 		margin-top: 35%;
@@ -63,7 +74,7 @@ export const WideCardElementCart = styled.div`
 	border-radius: 20px;
 	position: absolute;
 	margin-top: 0.5%;
-	margin-left: 0.5%;
+	margin-left: 3%;
 	z-index: 1;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
 	&:hover {
@@ -81,7 +92,7 @@ export const WideCardElementWishlist = styled.div`
 	color:white;
 	border-radius: 20px;
 	position: absolute;
-	margin-left: 17%;
+	margin-left: 19%;
 	margin-top: 0.5%;
 	z-index: 1;
 	padding-bottom: 4px;

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { FaBackspace } from "react-icons/fa";
+
 
 export const ClassComponentWrapper = styled.div`
     margin-left:20%;
@@ -16,6 +18,17 @@ export const ClassComponentContainer = styled.div`
     margin:5%;
     border-radius:10px;
 `
+
+export const ClassComponentContainerClose = styled(FaBackspace)`
+    z-index: 1000;
+    position: absolute;
+    margin-left: -750px;
+    margin-top: 1%;
+    &:hover{
+        cursor: pointer;
+    }
+`
+
 export const ClassComponentContainerLeft = styled.div`
     width:22%;
     height:450px;
@@ -47,6 +60,8 @@ export const ClassComponentContainerLeftWideContent = styled.div`
 export const ClassComponentContainerRight = styled.div`
     width:78%;
     background:rgba(235,235,235,0.5);
+    border: 0.5px rgba(0,0,0,0.35) solid;
+    border-left: 0px rgba(0,0,0,0.35) solid;
 `
 
 export const ClassComponentContainerRightCardContainer = styled.div`

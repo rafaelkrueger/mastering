@@ -115,23 +115,19 @@ export const TopicForm:React.FC<{formTopic:boolean,setFormTopic:any, specificCou
             }
         }} type="file"/>
         <br/>
-        <br/>
-        <div>
-        <video width="300" controls>
-            <source  src={newTopic.videoUrl?newTopic.videoUrl:''} type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
-        </div>
         </div>
         <div>
         <br/>
         <InformationFormatContainerBodyInputLabel>Link para conteúdo extra</InformationFormatContainerBodyInputLabel>
         <InformationFormatContainerBodyInput
+        placeholder="Opcional"
         type="text"/>
         </div>
-        <InformationFormatContainerBodyButton onClick={()=>{
+        <InformationFormatContainerBodyButton
+        disabled={loading}
+        onClick={()=>{
           submit(newTopic)
-        }} style={{width:'100%', marginLeft:'0.4%'}}>{loading?<AuthModalFormLoading color="white"/>:'Criar Novo tópico!'}</InformationFormatContainerBodyButton>
+        }} style={{width:'90%', marginLeft:'0.4%'}}>{loading?<AuthModalFormLoading color="white"/>:'Criar Novo tópico!'}</InformationFormatContainerBodyButton>
         </CourseContainerContentInformationContentForm>
         </>
     )

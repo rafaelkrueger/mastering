@@ -9,10 +9,12 @@ import {SlArrowLeft} from 'react-icons/sl'
 import { IBudgetCourse } from "../../../interfaces/budget";
 import * as Io from 'react-icons/io'
 import { ContentForm, TopicForm } from "../topic-content-form";
+import { Configure } from "../configure";
 
 export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:any}> = ({...props}) => {
   const [formTopic, setFormTopic] = useState<boolean>(false)
   const [formContent, setFormContent] = useState<boolean>(false)
+  const [showSettings, setShowSettings] = useState<boolean>(false)
   const [showContent, setShowContent] = useState({
     isActive:false,
     topicId:''
@@ -56,75 +58,71 @@ export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:a
       </div>
         <CourseContainerContentMain>
             <CourseContainerContentInformation>
-          {!formTopic && !formContent?
-          <>
-              {topics.length > 0 ?topics.map((topic:ITopic, index)=>{
-                return(
-                <>
-                <CourseContainerContentInformationContent isVisible={!formTopic}>
-                  <CourseContainerContentInformationTitle>{topic.name}</CourseContainerContentInformationTitle>
-                  {
-                    !showContent.isActive?
-                    <CourseContainerContentInformationIcon onClick={()=>{setShowContent({isActive:!showContent.isActive, topicId:topic._id as unknown as ''})}} size={30}/>
-                    :<CourseContainerContentInformationIcon2 onClick={()=>{setShowContent({isActive:!showContent.isActive, topicId:topic._id as unknown as ''})}} size={30}/>
-                  }
-                </CourseContainerContentInformationContent>
-                {
-                  showContent.isActive && contents !== undefined?
-                  contents[index].filter((content)=>{
-                    return content?.topicRelated === topic._id
-                  }).map((content)=>{
-                    return(
-                      <>
-                        <CourseContainerContentInformationContentDetails>
-                            <CourseContainerContentInformationContentDetailsText>{content.name}</CourseContainerContentInformationContentDetailsText>
-                            <CourseContainerContentInformationContentDetailsConteinerIcons>
-                              <CourseContainerContentInformationContentDetailsEdit/>
-                              <CourseContainerContentInformationContentDetailsDelete/>
-                            </CourseContainerContentInformationContentDetailsConteinerIcons>
-                      </CourseContainerContentInformationContentDetails>
-                      </>
-                    )
-                  })
-                  :''
-                }
-                {
-                  showContent.isActive?
-                    <>
-                    <CourseContainerContentInformationContentDark isVisible={!formTopic}>
-                      <CourseContainerContentInformationTitleBlank>Crie um conteúdo de estudo para: <strong>{topic.name}</strong></CourseContainerContentInformationTitleBlank>
-                      <CourseContainerContentInformationIconPlus onClick={()=>{ setTopicId(topic._id as unknown as ''); setFormContent(true);}} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
-                    </CourseContainerContentInformationContentDark>
-                    </>
-                  :''
-                }
-                </>
-                )
-              }):
+            {
+            showSettings ?
+              <Configure specificCourse={course} setSpecificCourse={setCourse} />
+              :
               <>
-              <CourseContainerContentInformationContent isVisible={!formContent}>
-                <CourseContainerContentInformationTitleBlank>Crie um novo tópico de estudo</CourseContainerContentInformationTitleBlank>
-                <CourseContainerContentInformationIconPlus onClick={()=>setFormTopic(true)} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
-              </CourseContainerContentInformationContent>
-              </>
+                {!formTopic && !formContent ?
+                  <>
+                    {topics.length > 0 && topics.map((topic: ITopic, index) => (
+                      <div key={index}>
+                        <CourseContainerContentInformationContent isVisible={!formTopic}>
+                          <CourseContainerContentInformationTitle>{topic.name}</CourseContainerContentInformationTitle>
+                          {
+                            !showContent.isActive ?
+                              <CourseContainerContentInformationIcon onClick={() => { setShowContent({ isActive: !showContent.isActive, topicId: topic._id as unknown as '' }) }} size={30} />
+                              :
+                              <CourseContainerContentInformationIcon2 onClick={() => { setShowContent({ isActive: !showContent.isActive, topicId: topic._id as unknown as '' }) }} size={30} />
+                          }
+                        </CourseContainerContentInformationContent>
+
+                        {
+                          showContent.isActive && contents !== undefined &&
+                          contents[index].filter((content) => content?.topicRelated === topic._id).map((content, contentIndex) => (
+                            <CourseContainerContentInformationContentDetails key={contentIndex}>
+                              <CourseContainerContentInformationContentDetailsText>{content.name}</CourseContainerContentInformationContentDetailsText>
+                              <CourseContainerContentInformationContentDetailsConteinerIcons>
+                                <CourseContainerContentInformationContentDetailsEdit />
+                                <CourseContainerContentInformationContentDetailsDelete />
+                              </CourseContainerContentInformationContentDetailsConteinerIcons>
+                            </CourseContainerContentInformationContentDetails>
+                          ))
+                        }
+
+                        {
+                          showContent.isActive &&
+                          <>
+                            <CourseContainerContentInformationContentDark isVisible={!formTopic}>
+                              <CourseContainerContentInformationTitleBlank>Crie um conteúdo de estudo para: <strong>{topic.name}</strong></CourseContainerContentInformationTitleBlank>
+                              <CourseContainerContentInformationIconPlus onClick={() => { setTopicId(topic._id as unknown as ''); setFormContent(true); }} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
+                            </CourseContainerContentInformationContentDark>
+                          </>
+                        }
+                      </div>
+                    ))}
+                  </>
+                  :
+                  <>
+                    <CourseContainerContentInformationContent isVisible={!formContent}>
+                      <CourseContainerContentInformationTitleBlank>Crie um novo tópico de estudo</CourseContainerContentInformationTitleBlank>
+                      <CourseContainerContentInformationIconPlus onClick={() => setFormTopic(true)} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
+                    </CourseContainerContentInformationContent>
+                  </>
               }
-            </>
-            :
-              ''
+              </>
             }
             {formTopic?<TopicForm formTopic={formTopic} setFormTopic={setFormTopic} specificCourse={props.specificCourse}/>:''}
             {formContent?<ContentForm formContent={formContent} setFormContent={setFormContent} relatedTopic={topicId}/>:''}
-            {topics.length > 0?
-          <>
-            <CourseContainerContentInformationContentDark isVisible={!formTopic}>
-                      <CourseContainerContentInformationTitleBlank>Crie um novo tópico de estudo</CourseContainerContentInformationTitleBlank>
-                      <CourseContainerContentInformationIconPlus onClick={()=>setFormTopic(true)} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
-            </CourseContainerContentInformationContentDark>
-          </>
-          :
-          ''
-          }
-            <CourseContainerConfigIcon color="rgba(0,0,0,0.7)" size={30}/>
+            { formTopic || formContent? '':
+            <>
+              <CourseContainerContentInformationContentDark isVisible={!formTopic}>
+                        <CourseContainerContentInformationTitleBlank>Crie um novo tópico de estudo</CourseContainerContentInformationTitleBlank>
+                        <CourseContainerContentInformationIconPlus onClick={()=>setFormTopic(true)} color="21d73c" size={24}></CourseContainerContentInformationIconPlus>
+              </CourseContainerContentInformationContentDark>
+            </>
+            }
+            <CourseContainerConfigIcon onClick={()=>setShowSettings(!showSettings)} color="rgba(0,0,0,0.7)" size={30}/>
             </CourseContainerContentInformation>
             <CourseContainerContentRentability>
             <div style={{padding:40}}>

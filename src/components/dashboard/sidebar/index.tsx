@@ -4,9 +4,12 @@ import * as Ai from 'react-icons/ai'
 import Prototype from '../../../images/user.png'
 import { IUser } from "../../../interfaces";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar: React.FC<{user:IUser}> = ({...props}) => {
   const [token, setToken] = useLocalStorage('accessToken', null)
+  const navigate = useNavigate()
+
 
   return <>
   <SidebarContainer>
@@ -62,7 +65,7 @@ export const Sidebar: React.FC<{user:IUser}> = ({...props}) => {
       await localStorage.removeItem('accessToken');
       await localStorage.removeItem('modules');
       await setToken(null)
-      window.location.replace('/');
+      navigate('/');
     }}>Logout</SidebarElementTitle>
     </SidebarElement>
     </SidebarDivision>
