@@ -3,6 +3,7 @@ import { AuthModal,NavbarComponent, MainCarousel, WideCards, Information, Catego
 
 export const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+
   return (
     <>
     <AuthModal isOpen={isOpen} setIsOpen={setIsOpen}/>

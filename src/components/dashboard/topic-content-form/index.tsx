@@ -133,7 +133,7 @@ export const TopicForm:React.FC<{formTopic:boolean,setFormTopic:any, specificCou
     )
 }
 
-export const ContentForm:React.FC<{formContent:boolean,setFormContent:any, relatedTopic:string}> = ({...props}) =>{
+export const ContentForm:React.FC<{formContent:boolean,setFormContent:any, relatedTopic:string, updatableContent?:IContent, setUpdatableContent:any}> = ({...props}) =>{
 
   const [toastOpen, setToastOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
@@ -161,7 +161,7 @@ export const ContentForm:React.FC<{formContent:boolean,setFormContent:any, relat
   ContentService.create(variables),
   {
     onSuccess:(res)=>{
-      setToastMessage('Content Created Successfully')
+      setToastMessage('Cnteúdo criado com sucesso!')
       setToastType("success")
       setToastOpen(true)
       setLoading(false)
@@ -176,10 +176,33 @@ export const ContentForm:React.FC<{formContent:boolean,setFormContent:any, relat
   }
 );
 
+const useUpdateContentMutation = useMutation((variables: ITopic) =>
+ContentService.update(variables),
+{
+  onSuccess:(res)=>{
+    setToastMessage('Conteúdo atualizado com sucesso!')
+    setToastType("success")
+    setToastOpen(true)
+    setLoading(false)
+    props.setFormContent(false)
+  },
+  onError:(e:any)=>{
+      setToastMessage(e.response.data.message)
+      setToastType("error")
+      setToastOpen(true)
+      setLoading(false)
+  }
+}
+);
+
 const submit = async (values: ITopic) => {
   try {
       setLoading(true)
-      await useNewTopicMutation.mutate(values);
+      if(props.updatableContent){
+        await useUpdateContentMutation.mutate(values);
+      }else{
+        useNewTopicMutation.mutate(values);
+      }
   } catch (e) {
       console.log(e)
   }
@@ -202,13 +225,14 @@ const convertBase64 = (file:any) => {
       <>
         <ToastMessage toastOpen={toastOpen} setToastOpen={setToastOpen} type={toastType} message={toastMessage}/>
         <CourseContainerContentInformationContent isVisible={props.formContent}>
-        <SlArrowLeft style={{marginLeft:'1%', marginTop:'-1%'}} onClick={()=>props.setFormContent(false)} size={27}>Voltar</SlArrowLeft>
+        <SlArrowLeft style={{marginLeft:'1%', marginTop:'-1%'}} onClick={()=>{props.setUpdatableContent(null);props.setFormContent(false)}} size={27}>Voltar</SlArrowLeft>
         <CourseContainerContentInformationTitleBlank>Preencha as informações do Conteúdo novo</CourseContainerContentInformationTitleBlank>
         </CourseContainerContentInformationContent>
         <CourseContainerContentInformationContentForm>
           <div>
             <InformationFormatContainerBodyInputLabel>Nome</InformationFormatContainerBodyInputLabel>
             <InformationFormatContainerBodyInput
+            defaultValue={props.updatableContent?props.updatableContent.name:''}
             onChange={(e)=>{
               setNewContentObject({...newContentObject, name:e.target.value})
             }}
@@ -219,6 +243,7 @@ const convertBase64 = (file:any) => {
             <InformationFormatContainerBodyInputLabel>Descrição do Produto</InformationFormatContainerBodyInputLabel>
             <br/>
             <InformationFormatContainerBodyTextArea
+                defaultValue={props.updatableContent?props.updatableContent.description:''}
                 onChange={(e)=>{
                   setNewContentObject({...newContentObject, description:e.target.value})
                 }}
@@ -228,8 +253,11 @@ const convertBase64 = (file:any) => {
                 <div style={{display:"flex", flexDirection:'column', width:'45%', marginRight:'2%'}}>
                 <InformationFormatContainerBodyInputLabel>Escolha a capa Conteúdo</InformationFormatContainerBodyInputLabel>
                 <br/>
-                <InformationFormatContainerBodyImage src={newContentObject?.image?newContentObject.image:Undefined}/>
+                <InformationFormatContainerBodyImage
+                defaultValue={props.updatableContent?props.updatableContent.image:''}
+                src={newContentObject?.image?newContentObject.image:props.updatableContent?props.updatableContent.image:''}/>
                 <InformationFormatContainerBodyInputFile
+                defaultValue={props.updatableContent?props.updatableContent.image:''}
                 style={{width:'100%'}}
                 onChange={async (e) => {
                     const files = e.target.files;
@@ -242,8 +270,11 @@ const convertBase64 = (file:any) => {
                 </div>
                 <div style={{display:"flex", flexDirection:'column', width:'45%', marginLeft:'2%'}}>
                 <InformationFormatContainerBodyInputLabel>Video Introdutório para o Tópico</InformationFormatContainerBodyInputLabel>
+                  <br/>
+                  <br/>
                   {mainVideo && (
                     <video
+                    defaultValue={props.updatableContent?props.updatableContent.videoUrl:''}
                     width="235"
                     height="195"
                     controls
@@ -253,7 +284,8 @@ const convertBase64 = (file:any) => {
                     </video>
                   )}
                   <InformationFormatContainerBodyInputFile
-                   style={{width:'90%', marginBottom:'2.9%'}}
+                  defaultValue={props.updatableContent?props.updatableContent.files:''}
+                  style={{width:'90%', marginBottom:'2.9%'}}
                   onChange={async (e) => {
                       const files = e.target.files;
                       if (files && files.length > 0) {
@@ -263,6 +295,7 @@ const convertBase64 = (file:any) => {
                           setNewContentObject({ ...newContentObject, videoUrl: base64 as unknown as  '' });
                       }
                   }} type="file"/>
+                  <br/>
                 <InformationFormatContainerBodyInputLabel>Arquivos Em PFD e entre outros</InformationFormatContainerBodyInputLabel>
                 <InformationFormatContainerBodyInputFile
                     style={{width:'90%', marginTop:'2.9%'}}
@@ -282,7 +315,7 @@ const convertBase64 = (file:any) => {
               if(newContentObject){
                 submit(newContentObject)
               }
-            }}>{loading?<AuthModalFormLoading color="white"/>:'Criar Novo Conteúdo'}</AuthModalFormFooterButton>
+            }}>{loading?<AuthModalFormLoading color="white"/>:props.updatableContent?'Atualizar Conteúdo':'Criar Conteúdo'}</AuthModalFormFooterButton>
         </CourseContainerContentInformationContentForm>
       </>
   )

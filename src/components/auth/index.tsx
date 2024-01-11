@@ -111,10 +111,10 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
             <AuthModalFooterRadio style={{marginBottom:'2%'}} >
             <AuthModalFormBodyRadio><AuthModalRegularRadio onChange={()=>{
                 setUser({...user, isTeacher:false})
-            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%'}}>Cadastrar como Aluno</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
+            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%', marginLeft:'9px'}}>Cadastrar como Aluno</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
             <AuthModalFormBodyRadio><AuthModalRegularRadio onChange={()=>{
                 setUser({...user, isTeacher:true})
-            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%'}}>Cadastrar como Professor</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
+            }} name="type" type="radio"/><AuthModalFormFooterTextRadio style={{marginBottom:'1%', marginLeft:'9px'}}>Cadastrar como Professor</AuthModalFormFooterTextRadio></AuthModalFormBodyRadio>
             </AuthModalFooterRadio>
             <AuthModalFormFooter>
             <AuthModalFormFooterText>Ao se inscrever, você concorda com nossos Termos de Uso e com a Política de Privacidade.</AuthModalFormFooterText>
@@ -132,6 +132,7 @@ export const AuthModal: React.FC<{ isOpen: boolean, setIsOpen:any }> = ({...prop
             }} placeholder='Senha' type="password"/>
             <AuthModalFormFooter>
             <AuthModalFormFooterButton onClick={()=>{submit(user)}}>{loading?<AuthModalFormLoading color="white"/>:'Login'}</AuthModalFormFooterButton>
+            <br/>
             <AuthModalFormFooterText>Bem-vindo(a) de volta, ficamos felizes com o seu retorno!</AuthModalFormFooterText>
             <AuthModalFormFooterTextLogin onClick={()=>setRegisterOpen(!registerOpen)}>Não possuo uma conta</AuthModalFormFooterTextLogin>
             </AuthModalFormFooter>

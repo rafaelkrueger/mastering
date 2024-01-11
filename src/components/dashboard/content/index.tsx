@@ -10,6 +10,8 @@ import { IBudgetCourse } from "../../../interfaces/budget";
 import * as Io from 'react-icons/io'
 import { ContentForm, TopicForm } from "../topic-content-form";
 import { Configure } from "../configure";
+import { DeleteConfirmation } from "../delete-confirmation";
+import { ToastMessage } from "src/components/toast-message";
 
 export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:any}> = ({...props}) => {
   const [formTopic, setFormTopic] = useState<boolean>(false)
@@ -25,13 +27,23 @@ export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:a
   const [budget, setBudget] = useState<IBudgetCourse>()
   const [topicId, setTopicId] = useState<string>('')
 
+  const [confirmationId, setConfirmationId] = useState<string>()
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false)
+
+  const [updatableContent, setUpdatableContent] = useState<IContent>()
+
+  const [toast, setToast] = useState({
+    open:false,
+    type:'',
+    message:'',
+  })
+
 
   useEffect(()=>{
     Api.get(`/course/${props.specificCourse}`)
     .then((res)=>{
       setCourse(res.data.course)
       setTopics(res.data.topic)
-      console.log(res.data.content)
       setContents(res.data.content)
     })
     .catch((err)=>{
@@ -45,12 +57,14 @@ export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:a
     .catch((err)=>{
       console.log(err)
     })
-  },[formTopic, formContent])
+  },[formTopic, formContent, isConfirmationOpen])
 
 
 
 
   return <>
+    <DeleteConfirmation contentId={confirmationId  as unknown as ''} isConfirmationOpen={isConfirmationOpen} setIsConfirmationOpen={setIsConfirmationOpen} setToast={setToast}/>
+    <ToastMessage toastOpen={toast.open} message={toast.message} type={toast.type} setToastOpen={setToast} />
     <CourseContainerContent>
       <div style={{display:'flex'}}>
           <SlArrowLeft style={{marginLeft:'-1%', marginTop:'4%', width:'10%', marginRight:'5%'}} onClick={()=>props.setSpecificCourse('')} size={27}>Voltar</SlArrowLeft>
@@ -83,8 +97,8 @@ export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:a
                             <CourseContainerContentInformationContentDetails key={contentIndex}>
                               <CourseContainerContentInformationContentDetailsText>{content.name}</CourseContainerContentInformationContentDetailsText>
                               <CourseContainerContentInformationContentDetailsConteinerIcons>
-                                <CourseContainerContentInformationContentDetailsEdit />
-                                <CourseContainerContentInformationContentDetailsDelete />
+                                <CourseContainerContentInformationContentDetailsEdit onClick={() => { setUpdatableContent(content); setTopicId(topic._id as unknown as ''); setFormContent(true); }} />
+                                <CourseContainerContentInformationContentDetailsDelete onClick={()=>{ setConfirmationId(content._id); setIsConfirmationOpen(!isConfirmationOpen)}} />
                               </CourseContainerContentInformationContentDetailsConteinerIcons>
                             </CourseContainerContentInformationContentDetails>
                           ))
@@ -113,7 +127,7 @@ export const CourseContent: React.FC<{specificCourse:string, setSpecificCourse:a
               </>
             }
             {formTopic?<TopicForm formTopic={formTopic} setFormTopic={setFormTopic} specificCourse={props.specificCourse}/>:''}
-            {formContent?<ContentForm formContent={formContent} setFormContent={setFormContent} relatedTopic={topicId}/>:''}
+            {formContent?<ContentForm formContent={formContent} setFormContent={setFormContent} relatedTopic={topicId} updatableContent={updatableContent} setUpdatableContent={setUpdatableContent}/>:''}
             { formTopic || formContent? '':
             <>
               <CourseContainerContentInformationContentDark isVisible={!formTopic}>
